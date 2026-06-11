@@ -1,5 +1,6 @@
 # xray-xhttp-relay-deploy
 
+[![Release](https://img.shields.io/github/v/release/superchaospc/xray-xhttp-relay-deploy?sort=semver)](https://github.com/superchaospc/xray-xhttp-relay-deploy/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![Claude Code](https://img.shields.io/badge/Claude%20Code-skill-d97757)
 ![Codex](https://img.shields.io/badge/Codex-skill-412991)
