@@ -84,6 +84,18 @@ The script writes outputs to fixed files; read them directly rather than scrapin
 
 After any node-changing operation, confirm success by re-reading `xray_nodes_info.txt` or running menu 5 (status). Report the resulting links back to the user, and remind them the client must speak XHTTP.
 
+### Step 4b — Shareable exports (PDF / HTML / PNG / Excel)
+
+When the user wants the links and QR codes as files to hand off — a printable PDF, an HTML page to open on a phone, individual QR PNGs, or an Excel inventory — pull the link file down and run the bundled exporter **locally** (it has the Python libs; the VPS need not). The exporter scans for `vless://` lines and ignores the surrounding `=== 名称 ===` / `端口:` / `出口:` decoration, so the remote info file feeds straight in:
+
+```bash
+ssh <target> 'cat /root/xray_nodes_info.txt' | python3 scripts/export_links.py --out ./exports
+```
+
+Default writes all four formats: `exports/qr/<name>.png` (one QR per node), `exports/lines.html` (self-contained gallery with QR inlined), `exports/lines.pdf` (printable, one node per row), `exports/lines.xlsx` (table + embedded QR). Narrow with `--format pdf,xlsx`. The script needs `segno reportlab openpyxl pillow` (`pip install --user …`); any missing lib skips just that one format. Run `python3 scripts/export_links.py --help` for details.
+
+The QR matters here for the same reason the script renders one in-terminal: IPv6 brackets, `#` and `&` in a vless link get mangled when copy-pasted through chat apps — scanning the PNG sidesteps that.
+
 ## Destructive operations — confirm before sending
 
 These change a live relay. **Stop, show the user exactly what you're about to run and on which `<target>`, and get explicit confirmation in the conversation before piping anything.** Do not auto-run them as part of a broader request.
